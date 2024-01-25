@@ -4,8 +4,29 @@ Add as needed!!
 """
 import logging
 
-def generate_dataset():
-    pass
+def generate_dataset(dataset_dir):
+    # Default transforms without augmentation
+    default_transform = transforms.Compose([
+        transforms.Resize((224, 224)),  # Resize images to (150, 150)
+        # transforms.Grayscale(num_output_channels=1),
+        transforms.ToTensor(),          # Convert images to PyTorch tensors
+    ])
+
+    # Transforms to augment the dataset
+    augment_transform = transforms.Compose([
+        transforms.Resize((224, 224)),  # Resize images to (150, 150)
+        # transforms.Grayscale(num_output_channels=1),
+        transforms.RandomHorizontalFlip(p=0.5),  # Randomly flip images horizontally with a probability of 0.5
+        transforms.RandomRotation(degrees=15),  # Randomly rotate images by up to 15 degrees
+        transforms.ToTensor(),        # Convert images to PyTorch tensors
+        # transforms.Normalize(mean=[0.0, 0.0, 0.0], std=[1/255.0, 1/255.0, 1/255.0])
+    ])
+
+    default_dataset = ImageFolder(root=dataset_dir, transform=default_transform)
+    augmented_dataset = ImageFolder(root=dataset_dir, transform=augment_transform)
+    augmented_dataset_2 = ImageFolder(root=dataset_dir, transform=augment_transform)
+    dataset = ConcatDataset([default_dataset, augmented_dataset, augmented_dataset_2])
+    return dataset
 
 # This method should be called to train the model on the Training set. 
 # Need to include code for saving the model weights when performance on the Validation set is best
