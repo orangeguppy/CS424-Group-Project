@@ -1,6 +1,6 @@
 """
 This is the pipeline for model training.
-1) Loading/Preprocessing data. Includes tokenisation/anything we need to do to the data before using it to train the model.
+1) Loading/Preprocessing data. Includes anything we need to do to the data before using it to train the model.
 2) Split dataset into train, validation, and test sets
 3) Set hyperparameters (refer to Google Doc). We can explore RandomSearch, GridSearch etc (these are methods for exploring the possible combinations of hyperparameters we can use)
 4) Instantiate model
