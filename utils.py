@@ -2,6 +2,10 @@
 Utility functions
 """
 import logging
+import subprocess
+
+def generate_smu_logo_dataset():
+    pass
 
 def generate_dataset(dataset_dir):
     # Default transforms without augmentation
