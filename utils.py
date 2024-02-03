@@ -1,11 +1,27 @@
 """
 Utility functions
 """
+import os
 import logging
 import subprocess
 
-def generate_smu_logo_dataset():
-    pass
+from PIL import Image
+from pillow_heif import register_heif_opener
+register_heif_opener()
+
+import pydrive_utils
+
+def generate_smu_logo_dataset(local_dir="dataset/smu_logo", dataset_downloaded=True):
+    # Download the dataset if it doesn't exist
+    if (dataset_downloaded is False):
+        local_dir = "dataset/smu_logo"
+        os.makedirs(local_dir, exist_ok=True)
+        smu_logo_folder_id = "1AILB_g4xqaMCCo1Ors4X3iTiaxIuuBvB"
+        pydrive_utils.download_files_to_local_directory(local_dir, smu_logo_folder_id)
+    
+    # Load the dataset
+    dataset = generate_dataset(local_dir)
+    return dataset
 
 def generate_dataset(dataset_dir):
     # Default transforms without augmentation
@@ -35,27 +51,27 @@ def generate_dataset(dataset_dir):
 # Need to include code for saving the model weights when performance on the Validation set is best
 def train(model, device, trainloader, num_epochs, batch_size, lr):
     for epoch in range(num_epochs):  # loop over the dataset multiple times
-    running_loss = 0.0
-    for i, data in enumerate(trainloader, 0):
-        # get the inputs; data is a list of [inputs, labels]
-        inputs, labels = data
+        running_loss = 0.0
+        for i, data in enumerate(trainloader, 0):
+            # get the inputs; data is a list of [inputs, labels]
+            inputs, labels = data
 
-        # zero the parameter gradients
-        optimizer.zero_grad()
+            # zero the parameter gradients
+            optimizer.zero_grad()
 
-        # forward + backward + optimize
-        outputs = net(inputs)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
+            # forward + backward + optimize
+            outputs = net(inputs)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
 
-        # print statistics
-        running_loss += loss.item()
-        if i % 60 == 59:    # print every 60 mini-batches
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 60:.3f}')
-            running_loss = 0.0
+            # print statistics
+            running_loss += loss.item()
+            if i % 60 == 59:    # print every 60 mini-batches
+                print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 60:.3f}')
+                running_loss = 0.0
 
-    print('Finished Training')
+        print('Finished Training')
 
 # For testing model performance
 def test(test_loader, model, device, PATH, loader_type="test"):
@@ -100,3 +116,27 @@ def setup_logging():
     logger.setLevel(logging.INFO)
 
     return logger
+
+def convert_heic_to_png():
+    import os
+from PIL import Image
+
+def convert_heic_to_png(directory):
+    # Iterate through all files in the directory
+    for filename in os.listdir(directory):
+        # Check if the file has .heic extension
+        if filename.lower().endswith('.heic'):
+            heic_path = os.path.join(directory, filename)
+            # Open the HEIC image using PIL
+            with Image.open(heic_path) as img:
+                # Construct the path for the PNG image
+                png_path = os.path.splitext(heic_path)[0] + '.png'
+                # Convert and save the image as PNG
+                img.convert('RGB').save(png_path, format='PNG')
+            # Remove the original HEIC file
+            os.remove(heic_path)
+            print(f"Converted {filename} to PNG")
+
+# Replace 'directory_path' with the directory containing the HEIC images
+directory_path = 'dataset/smu_logo'
+convert_heic_to_png(directory_path)
