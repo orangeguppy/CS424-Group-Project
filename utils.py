@@ -1,6 +1,5 @@
 """
-Utility functions for dataset/dataloader, training/testing/validation functions, and any other miscellaneous helper functions.
-Add as needed!!
+Utility functions
 """
 import logging
 
@@ -30,13 +29,54 @@ def generate_dataset(dataset_dir):
 
 # This method should be called to train the model on the Training set. 
 # Need to include code for saving the model weights when performance on the Validation set is best
-def train(model, device):
-    pass
+def train(model, device, trainloader, num_epochs, batch_size, lr):
+    for epoch in range(num_epochs):  # loop over the dataset multiple times
+    running_loss = 0.0
+    for i, data in enumerate(trainloader, 0):
+        # get the inputs; data is a list of [inputs, labels]
+        inputs, labels = data
 
-# This method should be called for testing on both Validation and Test sets
-# Make sure to include code to load the correct model weights
-def test(model, device): 
-    pass
+        # zero the parameter gradients
+        optimizer.zero_grad()
+
+        # forward + backward + optimize
+        outputs = net(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+
+        # print statistics
+        running_loss += loss.item()
+        if i % 60 == 59:    # print every 60 mini-batches
+            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 60:.3f}')
+            running_loss = 0.0
+
+    print('Finished Training')
+
+# For testing model performance
+def test(test_loader, model, device, PATH, loader_type="test"):
+    model.load_state_dict(torch.load(PATH))
+    correct = 0
+    total = 0
+
+    # Disable gradients
+    with torch.no_grad():
+        for data in test_loader:
+            images, labels = data
+            images, labels = images.to(device), labels.to(device)
+            # calculate outputs by running images through the network
+            outputs = model(images)
+            # the class with the highest energy is what we choose as prediction
+            _, predicted = torch.max(outputs.data, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+    # Log metrics
+    accuracy = 100 * correct / total
+    logger.info(f'Accuracy of the network on the {total} {loader_type} images: {accuracy} %')
+    print(f'Accuracy of the network on the {total} {loader_type} images: {accuracy} %')
+
+    return accuracy
 
 def setup_logging():
     # Create a logger

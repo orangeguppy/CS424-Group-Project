@@ -34,6 +34,9 @@ dataset = utils.generate_dataset() # Maybe can create a separate method for any 
                                     # Just do whichever is easier, no hard/fast rules
 
 # Specify hyperparameters, we probably will need to pass these hyperparameters into the train() method later on!
+num_epochs = 3
+batch_size = 16
+lr = 0.001
 
 # Split dataset and create Dataloaders for each training set
 # Need to create the train, validation, and testing dataset

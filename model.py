@@ -1,6 +1,6 @@
 import torch.nn.Module
 
-class PlaceholderModel(nn.Module):
+class CustomResnet50(nn.Module):
     def __init__(self):
         pass
     

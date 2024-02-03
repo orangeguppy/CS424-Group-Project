@@ -6,9 +6,7 @@ gauth.LocalWebserverAuth() # Creates local webserver and auto handles authentica
 drive = GoogleDrive(gauth)
 
 # Query
-# query = {'q': "'CS424 proj' in parents and trashed=false"}
 query = {'q': "sharedWithMe and title = 'CS424 proj' and trashed = false"}
-# query = {'q': "'root' in parents and trashed=false"}
 
 # Auto-iterate through all files that matches this query
 file_list = drive.ListFile(query).GetList()
