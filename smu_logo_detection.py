@@ -32,7 +32,7 @@ model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 model.to(device) # Move the model to the GPU if available, else move it to the CPU
 
 # Directory containing images
-img_dir = 'dataset/smu_logo'
+img_dir = 'dataset/smu_logo/images'
 
 # Get list of image files in directory
 img_files = [os.path.join(img_dir, f) for f in os.listdir(img_dir) if os.path.isfile(os.path.join(img_dir, f))]
