@@ -16,8 +16,8 @@ class SMULogoDataset(torch.utils.data.Dataset):
         self.transforms = transforms
         # load all image files, sorting them to
         # ensure that they are aligned
-        self.imgs = list(sorted(os.listdir(os.path.join(root, "Images"))))
-        self.masks = list(sorted(os.listdir(os.path.join(root, "Masks"))))
+        self.imgs = list(sorted(os.listdir(os.path.join(root, "images"))))
+        self.masks = list(sorted(os.listdir(os.path.join(root, "masks"))))
 
     def __getitem__(self, idx):
         # load images
