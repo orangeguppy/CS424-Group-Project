@@ -4,24 +4,27 @@ Utility functions
 import os
 import logging
 import subprocess
+import torch
 
 from PIL import Image
 from pillow_heif import register_heif_opener
 register_heif_opener()
 
 import pydrive_utils
+from torchvision.transforms import transforms
+from torchvision.datasets import ImageFolder
+from torch.utils.data import ConcatDataset
 
-def generate_smu_logo_dataset(local_dir="dataset/smu_logo", dataset_downloaded=True):
+def download_dataset(local_dir, folder_id, dataset_downloaded):
     # Download the dataset if it doesn't exist
     if (dataset_downloaded is False):
-        local_dir = "dataset/smu_logo"
+        # local_dir = "dataset/smu_images"
         os.makedirs(local_dir, exist_ok=True)
-        smu_logo_folder_id = "1AILB_g4xqaMCCo1Ors4X3iTiaxIuuBvB"
-        pydrive_utils.download_files_to_local_directory(local_dir, smu_logo_folder_id)
-    
-    # Load the dataset
-    dataset = generate_dataset(local_dir)
-    return dataset
+        # smu_images_folder_id = "1A5o_MgR02A4dMK0lNg8XLjx30859iDm6"
+        pydrive_utils.download_files_to_local_directory(local_dir, folder_id)
+        print('downloaded2')
+    print('downloaded3')
+    return
 
 def generate_dataset(dataset_dir):
     # Default transforms without augmentation
@@ -46,6 +49,30 @@ def generate_dataset(dataset_dir):
     augmented_dataset_2 = ImageFolder(root=dataset_dir, transform=augment_transform)
     dataset = ConcatDataset([default_dataset, augmented_dataset, augmented_dataset_2])
     return dataset
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # This method should be called to train the model on the Training set. 
 # Need to include code for saving the model weights when performance on the Validation set is best

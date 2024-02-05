@@ -7,7 +7,7 @@ gauth.LocalWebserverAuth()  # Follow the authentication process
 drive = GoogleDrive(gauth)
 
 # Define the file path of the nested folder
-file_path = "/CS424 proj/images/smu logo"
+file_path = "/CS424 proj/images"
 
 # Split the file path to get folder names
 folder_names = file_path.split("/")
