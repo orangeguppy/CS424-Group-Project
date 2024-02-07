@@ -2,11 +2,11 @@ import os
 import torch
 import model
 # import utils
-import mlflow
+#import mlflow
 
 from PIL import Image
-from pillow_heif import register_heif_opener
-register_heif_opener()
+#from pillow_heif import register_heif_opener
+#register_heif_opener()
 
 # This line is to set the model to use the GPU if available, else the CPU
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -32,7 +32,9 @@ model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 model.to(device) # Move the model to the GPU if available, else move it to the CPU
 
 # Directory containing images
-img_dir = 'dataset/smu_logo/images'
+#pandas.read_csv(r"C:\Users\DeePak\Desktop\myac.csv")
+#change the below dir to the path in ur device :D
+img_dir = r'C:\Users\Abiya\OneDrive\CS424-Group-Project\dataset\smu_logo\images'
 
 # Get list of image files in directory
 img_files = [os.path.join(img_dir, f) for f in os.listdir(img_dir) if os.path.isfile(os.path.join(img_dir, f))]
