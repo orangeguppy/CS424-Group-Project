@@ -1,6 +1,7 @@
-import torch.nn.Module
+import torch
+import torch.nn as nn
 
-class CustomResnet50(nn.Module):
+class CustomModel(nn.Module):
     def __init__(self):
         pass
     

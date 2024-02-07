@@ -43,7 +43,7 @@ lr = 0.001
 # To load the data from each of the train, validation, and testing datasets, we need to create corresponding Dataloaders.
 
 # Instantiate model
-# model = 
+model = model.
 model.to(device) # Move the model to the GPU if available, else move it to the CPU
 
 # Train the model
