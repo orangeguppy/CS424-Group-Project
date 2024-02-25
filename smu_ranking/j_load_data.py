@@ -12,7 +12,7 @@ from torch.utils.data import ConcatDataset
 #import j_load_data
 
 def create_data():
-    dataset_dir = "dataset/smu_images"
+    dataset_dir = "../dataset/smu_images"
 
     # Default transforms without augmentation
     default_transform = transforms.Compose([

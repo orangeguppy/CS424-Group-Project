@@ -89,7 +89,8 @@ class ResNet(nn.Module):
 # Setting hyperparamters
 #num_classes = 10
 num_epochs = 3
-batch_size = 52
+num_classes = 10
+batch_size = 16
 learning_rate = 0.01
 
 model = ResNet(ResidualBlock, [3, 4, 6, 3]).to(device)
@@ -113,3 +114,6 @@ j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader,
 
 # test the dataset
 j_run_model.test(device, model, test_loader)
+
+classes = ('li ka shing exterior', 'li ka shing interior', 'not smu', 'sol_exterior', 'sol_interior')
+j_run_model.test_indivclass(classes, test_loader, device, model)

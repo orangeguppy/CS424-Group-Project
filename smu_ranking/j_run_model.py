@@ -62,3 +62,29 @@ def test(device, model, test_loader):
             del images, labels, outputs
 
         print('Accuracy of the network on the {} test images: {} %'.format(len(test_loader), 100 * correct / total))   
+
+def test_indivclass(classes, test_loader, device, model):
+    correct_pred = {classname: 0 for classname in classes}
+    total_pred = {classname: 0 for classname in classes}
+
+    # again no gradients needed
+    with torch.no_grad():
+        for data in test_loader:
+            images, labels = data
+            images = images.to(device)
+            labels = labels.to(device)
+            outputs = model(images)
+            _, predictions = torch.max(outputs, 1)
+            # collect the correct predictions for each class
+            for label, prediction in zip(labels, predictions):
+                if label >= len(classes):  # Check if label is out of range
+                    print(f"Label {label} is out of range for classes tuple")
+                if label == prediction:
+                    correct_pred[classes[label]] += 1
+                total_pred[classes[label]] += 1
+
+
+    # print accuracy for each class
+    for classname, correct_count in correct_pred.items():
+        accuracy = 100 * float(correct_count) / total_pred[classname]
+        print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')    
