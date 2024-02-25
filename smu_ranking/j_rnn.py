@@ -5,6 +5,9 @@ from torchvision import datasets
 from torchvision import transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
+import j_load_data
+import j_run_model
+
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -96,3 +99,11 @@ optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, weight_decay =
 
 # Train the model
 #total_step = len(train_loader)
+
+############################################################################################################
+# Run model
+
+
+train_loader, validation_loader, test_loader = j_load_data.create_data()
+j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader)
+j_run_model.test(device, model, test_loader)
