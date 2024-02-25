@@ -9,11 +9,12 @@ from torch.utils.data.sampler import SubsetRandomSampler
 #import j_load_data
 #import j_rnn
 import gc
-
+import time
 
 def train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader):
     #total_step = len(j_load_data.train_loader)
     for epoch in range(num_epochs):
+        start = time.time()
         for i, (images, labels) in enumerate(train_loader):  
             # Move tensors to the configured device
             images = images.to(device)
@@ -33,7 +34,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
 
         print ('Epoch [{}/{}], Loss: {:.4f}' 
                         .format(epoch+1, num_epochs, loss.item()))
-                
+        print("Epoch time:",(time.time()-start) * 10**3, "ms")
         # Validation
         with torch.no_grad():
             correct = 0
