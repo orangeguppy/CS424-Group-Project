@@ -95,4 +95,4 @@ criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, weight_decay = 0.001, momentum = 0.9)  
 
 # Train the model
-total_step = len(train_loader)
+#total_step = len(train_loader)
