@@ -34,7 +34,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
 
         print ('Epoch [{}/{}], Loss: {:.4f}' 
                         .format(epoch+1, num_epochs, loss.item()))
-        print("Epoch time:",(time.time()-start) * 10**3, "ms")
+        print("Epoch time:",(time.time()-start), "s")
         # Validation
         with torch.no_grad():
             correct = 0
