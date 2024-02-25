@@ -1,3 +1,13 @@
+import numpy as np
+import torch
+import torch.nn as nn
+from torchvision import datasets
+from torchvision import transforms
+from torch.utils.data.sampler import SubsetRandomSampler
+
+# Device configuration
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride = 1, downsample = None):
         super(ResidualBlock, self).__init__()
