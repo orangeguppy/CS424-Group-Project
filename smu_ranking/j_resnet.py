@@ -87,9 +87,9 @@ class ResNet(nn.Module):
     
 ############################################################################################################
 # Setting hyperparamters
-num_classes = 10
-num_epochs = 20
-batch_size = 16
+#num_classes = 10
+num_epochs = 3
+batch_size = 52
 learning_rate = 0.01
 
 model = ResNet(ResidualBlock, [3, 4, 6, 3]).to(device)

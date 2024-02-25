@@ -6,8 +6,6 @@ from torchvision import datasets
 from torchvision import transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
-#import j_load_data
-#import j_rnn
 import gc
 import time
 
@@ -34,7 +32,6 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
 
         print ('Epoch [{}/{}], Loss: {:.4f}' 
                         .format(epoch+1, num_epochs, loss.item()))
-        print("Epoch time:",(time.time()-start), "s")
         # Validation
         with torch.no_grad():
             correct = 0
@@ -48,7 +45,8 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
                 correct += (predicted == labels).sum().item()
                 del images, labels, outputs
 
-            print('Accuracy of the network on the {} validation images: {} %'.format(5000, 100 * correct / total)) 
+            print('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
+            print("Epoch time:",(time.time()-start), "s") 
 
 def test(device, model, test_loader):
     with torch.no_grad():
@@ -63,4 +61,4 @@ def test(device, model, test_loader):
             correct += (predicted == labels).sum().item()
             del images, labels, outputs
 
-        print('Accuracy of the network on the {} test images: {} %'.format(10000, 100 * correct / total))   
+        print('Accuracy of the network on the {} test images: {} %'.format(len(test_loader), 100 * correct / total))   
