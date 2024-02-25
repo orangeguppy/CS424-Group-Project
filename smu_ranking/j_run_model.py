@@ -1,3 +1,4 @@
+# two functions one to train and validate and one to test the data
 import numpy as np
 import torch
 import torch.nn as nn

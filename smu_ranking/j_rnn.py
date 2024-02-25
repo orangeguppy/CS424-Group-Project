@@ -5,6 +5,7 @@ from torchvision import datasets
 from torchvision import transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
+# Copyable code: imports
 import j_load_data
 import j_run_model
 
@@ -103,7 +104,12 @@ optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, weight_decay =
 ############################################################################################################
 # Run model
 
-
+# Copyable code to use the other two python files (Everything in between change)
+# create the dataset
 train_loader, validation_loader, test_loader = j_load_data.create_data()
+
+# train the dataset
 j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader)
+
+# test the dataset
 j_run_model.test(device, model, test_loader)
