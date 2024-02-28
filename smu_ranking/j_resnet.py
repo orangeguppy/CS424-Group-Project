@@ -38,7 +38,7 @@ class ResidualBlock(nn.Module):
 
 ############################################################################################################    
 class ResNet(nn.Module):
-    def __init__(self, block, layers, num_classes = 10):
+    def __init__(self, block, layers, num_classes = 5):
         super(ResNet, self).__init__()
         self.inplanes = 64
         self.conv1 = nn.Sequential(
@@ -88,12 +88,12 @@ class ResNet(nn.Module):
 ############################################################################################################
 # Setting hyperparamters
 #num_classes = 10
-num_epochs = 3
-num_classes = 10
-batch_size = 16
+num_epochs = 5
+num_classes = 5
+batch_size = 24
 learning_rate = 0.01
 
-model = ResNet(ResidualBlock, [3, 4, 6, 3]).to(device)
+model = ResNet(ResidualBlock, [3, 4, 23, 3]).to(device)
 
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()

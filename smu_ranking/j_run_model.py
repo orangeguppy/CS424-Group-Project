@@ -9,7 +9,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 import gc
 import time
 
-def train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader):
+def train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader, scheduler):
     #total_step = len(j_load_data.train_loader)
     for epoch in range(num_epochs):
         start = time.time()
@@ -21,7 +21,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
             # Forward pass
             outputs = model(images)
             loss = criterion(outputs, labels)
-            
+
             # Backward and optimize
             optimizer.zero_grad()
             loss.backward()
@@ -32,6 +32,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
 
         print ('Epoch [{}/{}], Loss: {:.4f}' 
                         .format(epoch+1, num_epochs, loss.item()))
+        
         # Validation
         with torch.no_grad():
             correct = 0

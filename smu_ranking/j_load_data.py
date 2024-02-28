@@ -7,9 +7,6 @@ from torchvision import transforms
 from torch.utils.data import random_split
 from torchvision.datasets import ImageFolder
 from torch.utils.data import ConcatDataset
-#from torchvision.transforms import transforms
-
-#import j_load_data
 
 def create_data():
     dataset_dir = "../dataset/smu_images"
@@ -19,7 +16,7 @@ def create_data():
         transforms.Resize((224, 224)),  # Resize images to (150, 150)
         # transforms.Grayscale(num_output_channels=1),
         transforms.ToTensor(),          # Convert images to PyTorch tensors
-        # transforms.Normalize(mean=[0.0, 0.0, 0.0], std=[1/255.0, 1/255.0, 1/255.0])
+        transforms.Normalize(mean=[0.4914, 0.4822, 0.4465],std=[0.2023, 0.1994, 0.2010])
     ])
 
     # Transforms to augment the dataset
@@ -30,6 +27,7 @@ def create_data():
         transforms.RandomRotation(degrees=15),  # Randomly rotate images by up to 15 degrees
         transforms.ToTensor(),        # Convert images to PyTorch tensors
         # transforms.Normalize(mean=[0.0, 0.0, 0.0], std=[1/255.0, 1/255.0, 1/255.0])
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
 
     default_dataset = ImageFolder(root=dataset_dir, transform=default_transform)
