@@ -18,6 +18,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
             # Move tensors to the configured device
             images = images.to(device)
             labels = labels.to(device)
+            print("i am here 1")
             
             # Forward pass
             outputs = model(images)
@@ -27,9 +28,11 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            print("i am here 2")
             del images, labels, outputs
             torch.cuda.empty_cache()
             gc.collect()
+            print("i am here 3")
 
         print ('Epoch [{}/{}], Loss: {:.4f}' 
                         .format(epoch+1, num_epochs, loss.item()))
