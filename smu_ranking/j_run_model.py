@@ -9,7 +9,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 import gc
 import time
 
-def train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader, scheduler):
+def train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader):
     #total_step = len(j_load_data.train_loader)
     for epoch in range(num_epochs):
         start = time.time()
