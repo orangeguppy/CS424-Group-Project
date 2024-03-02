@@ -86,9 +86,9 @@ class ResNet(nn.Module):
         return x
     
 ############################################################################################################
-# Setting hyperparamters
-num_classes = 10
-num_epochs = 20
+# Setting hyperparamters -- Change your variables here
+num_classes = 5     # CHANGE NUMBER OF CLASSES HERE
+num_epochs = 2
 batch_size = 16
 learning_rate = 0.01
 

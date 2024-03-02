@@ -2,3 +2,4 @@ client_secrets.json
 *.pyc
 __pycache__/
 smu_ranking/logs
+dataset/smu_images/images-zipped.zip
