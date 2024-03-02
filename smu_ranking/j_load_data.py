@@ -7,9 +7,17 @@ from torchvision import transforms
 from torch.utils.data import random_split
 from torchvision.datasets import ImageFolder
 from torch.utils.data import ConcatDataset
+import os
 
 def create_data():
     dataset_dir = "../dataset/smu_images"
+    items = os.listdir(dataset_dir)
+    
+    # Iterate through each item
+    for item in items:
+        # Check if the item is a folder
+        if os.path.isdir(os.path.join(dataset_dir, item)):
+            print(item)
 
     # Default transforms without augmentation
     default_transform = transforms.Compose([
