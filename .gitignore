@@ -1,0 +1,6 @@
+client_secrets.json
+*.pyc
+__pycache__/
+smu_ranking/logs
+dataset/smu_images/images-zipped.zip
+logo_detection/finetuning/train_model_weights.pth
