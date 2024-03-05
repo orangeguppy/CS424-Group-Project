@@ -6,7 +6,6 @@ from torchvision.ops.boxes import masks_to_boxes
 from torchvision import tv_tensors
 from torchvision.transforms.v2 import functional as F
 
-
 class SMULogoDataset(torch.utils.data.Dataset):
     def __init__(self, root, transforms):
         self.root = root

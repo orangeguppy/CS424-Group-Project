@@ -95,6 +95,7 @@ def main():
     )
 
     # let's train it just for 2 epochs
+<<<<<<< HEAD
     num_epochs = 5
 
     for epoch in range(num_epochs):
@@ -106,6 +107,45 @@ def main():
         # evaluate on the test dataset
         evaluate(model, data_loader_test, device=device)
 
+=======
+    num_epochs = 2
+
+    # for epoch in range(num_epochs):
+    #     # train for one epoch, printing every 10 iterations
+    #     train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=10)
+    #     # update the learning rate
+    #     lr_scheduler.step()
+    #     # evaluate on the test dataset
+    #     evaluate(model, data_loader_test, device=device)
+
+    image = read_image("dataset/smu_logo/images/IMG_0441.png")
+
+    eval_transform = get_transform(train=False)
+
+    model.eval()
+    with torch.no_grad():
+        x = eval_transform(image)
+        # convert RGBA -> RGB and move to device
+        x = x[:3, ...].to(device)
+        predictions = model([x, ])
+        pred = predictions[0]
+
+
+    image = (255.0 * (image - image.min()) / (image.max() - image.min())).to(torch.uint8)
+    image = image[:3, ...]
+    pred_labels = [f"smu_logo: {score:.3f}" for label, score in zip(pred["labels"], pred["scores"])]
+    pred_boxes = pred["boxes"].long()
+    output_image = draw_bounding_boxes(image, pred_boxes, pred_labels, colors="red")
+
+    masks = (pred["masks"] > 0.7).squeeze(1)
+    output_image = draw_segmentation_masks(output_image, masks, alpha=0.5, colors="blue")
+
+    plt.figure(figsize=(12, 12))
+    plt.imsave("testing.png", output_image.permute(1, 2, 0).cpu().numpy())
+    plt.imshow(output_image.permute(1, 2, 0))
+
+    print("That's it!")
+>>>>>>> 76f986e563fce274ebf45bac7f75917b4ccf8176
 
 if __name__ == '__main__':
     main()
