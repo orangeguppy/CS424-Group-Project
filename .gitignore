@@ -3,4 +3,8 @@ client_secrets.json
 __pycache__/
 smu_ranking/logs
 dataset/smu_images/images-zipped.zip
+<<<<<<< HEAD
 logo_detection/train_model_weights.pth
+=======
+logo_detection/finetuning/train_model_weights.pth
+>>>>>>> d61d48488c7729c2446401ed3ea9d1872ec61c43

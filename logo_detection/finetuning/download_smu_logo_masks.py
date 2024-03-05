@@ -10,21 +10,13 @@ headers = {
 }
 
 # Open the JSON file
-<<<<<<< HEAD
 with open('logo_masks.json', 'r') as file:
-=======
-with open('smu_logo_masks.json', 'r') as file:
->>>>>>> d61d48488c7729c2446401ed3ea9d1872ec61c43
     # Load the JSON data into a Python dictionary
     data = json.load(file)
 
 for img in data["exports"]:
     img_id = img["data_row"]["external_id"]
-<<<<<<< HEAD
     mask_url = img["projects"]['clt17dv9z0jaf07yjezdea0p4']["labels"][0]["annotations"]["objects"][0]["mask"]["url"]
-=======
-    mask_url = img["projects"]['cls6d0uos0lw307y13m2079vq']["labels"][0]["annotations"]["objects"][0]["mask"]["url"]
->>>>>>> d61d48488c7729c2446401ed3ea9d1872ec61c43
     
     # Make the API request
     req = urllib.request.Request(mask_url, headers=headers)
@@ -32,7 +24,6 @@ for img in data["exports"]:
     # Optionally, print the image of the mask
     image = Image.open(urllib.request.urlopen(req))
     # Save the image as a PNG file
-<<<<<<< HEAD
     image.save(f"dataset/smu_logo/masks/{img_id}")
 
 # install latest labelbox version (3.0 or above)
@@ -55,6 +46,3 @@ for img in data["exports"]:
 
 # with open("logo_masks.json", "w") as outfile:
 #     json.dump(labels, outfile)
-=======
-    image.save(f"dataset/smu_logo/masks/{img_id}")
->>>>>>> d61d48488c7729c2446401ed3ea9d1872ec61c43
