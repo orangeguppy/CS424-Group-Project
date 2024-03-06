@@ -29,7 +29,7 @@ class DenseNet201(nn.Module):
 
 if __name__ == "__main__":
     # Hyperparameters
-    num_classes = 5  #change acc to num of folders in images
+    num_classes = 14  #change acc to num of folders in images
     num_epochs = 5
 #if too small -- not enough -> no learning
 #if too big - may start overfitting

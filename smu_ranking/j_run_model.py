@@ -17,10 +17,13 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
             # Move tensors to the configured device
             images = images.to(device)
             labels = labels.to(device)
+            print(labels)
             # print("i am here 1")
             
             # Forward pass
             outputs = model(images)
+
+            print(outputs)
             loss = criterion(outputs, labels)
 
             # Backward and optimize
