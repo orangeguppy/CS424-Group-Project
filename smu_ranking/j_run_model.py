@@ -5,11 +5,30 @@ import torch.nn as nn
 from torchvision import datasets
 from torchvision import transforms
 from torch.utils.data.sampler import SubsetRandomSampler
+import logging
 
 import gc
 import time
 
 def train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader):
+    # If the model is DenseNet201, initialise a logger
+    # Create a logger
+    if (str(model) == "DenseNet201-abi"):
+        logger = logging.getLogger('train_test_logger')
+
+        # Create a file handler
+        file_handler = logging.FileHandler(f'{model}_output.log')
+
+        # Define the log message format
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        file_handler.setFormatter(formatter)  # Set the formatter for the file handler
+
+        # Add the file handler to the logger
+        logger.addHandler(file_handler)
+
+        # Set logging level
+        logger.setLevel(logging.INFO)
+
     #total_step = len(j_load_data.train_loader)
     for epoch in range(num_epochs):
         start = time.time()
@@ -18,6 +37,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
             images = images.to(device)
             labels = labels.to(device)
             print(labels)
+
             # print("i am here 1")
             
             # Forward pass
@@ -38,6 +58,8 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
 
         print ('Epoch [{}/{}], Loss: {:.4f}' 
                         .format(epoch+1, num_epochs, loss.item()))
+        logger.info('Epoch [{}/{}], Loss: {:.4f}' 
+                        .format(epoch+1, num_epochs, loss.item()))
         
         # Validation
         with torch.no_grad():
@@ -54,8 +76,26 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
 
             print('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             print("Epoch time:",(time.time()-start), "s") 
+            logger.info('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
+            logger.info("Epoch time:",(time.time()-start), "s")
 
 def test(classes, device, model, test_loader):
+    if (str(model) == "DenseNet201-abi"):
+        logger = logging.getLogger('train_test_logger')
+
+        # Create a file handler
+        file_handler = logging.FileHandler(f'{model}_output.log')
+
+        # Define the log message format
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        file_handler.setFormatter(formatter)  # Set the formatter for the file handler
+
+        # Add the file handler to the logger
+        logger.addHandler(file_handler)
+
+        # Set logging level
+        logger.setLevel(logging.INFO)
+
     with torch.no_grad():
         correct = 0
         total = 0
@@ -69,10 +109,27 @@ def test(classes, device, model, test_loader):
             del images, labels, outputs
 
         print('Accuracy of the network on the {} test images: {} %'.format(len(test_loader), 100 * correct / total))   
+        logger.info('Accuracy of the network on the {} test images: {} %'.format(len(test_loader), 100 * correct / total))
 
 def test_indivclass(classes, test_loader, device, model):
     correct_pred = {classname: 0 for classname in classes}
     total_pred = {classname: 0 for classname in classes}
+
+    if (str(model) == "DenseNet201-abi"):
+        logger = logging.getLogger('train_test_logger')
+
+        # Create a file handler
+        file_handler = logging.FileHandler(f'{model}_output.log')
+
+        # Define the log message format
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        file_handler.setFormatter(formatter)  # Set the formatter for the file handler
+
+        # Add the file handler to the logger
+        logger.addHandler(file_handler)
+
+        # Set logging level
+        logger.setLevel(logging.INFO)
 
     # again no gradients needed
     with torch.no_grad():
@@ -86,6 +143,7 @@ def test_indivclass(classes, test_loader, device, model):
             for label, prediction in zip(labels, predictions):
                 if label >= len(classes):  # Check if label is out of range
                     print(f"Label {label} is out of range for classes tuple")
+                    logger.info(f"Label {label} is out of range for classes tuple")
                 if label == prediction:
                     correct_pred[classes[label]] += 1
                 total_pred[classes[label]] += 1
@@ -94,4 +152,5 @@ def test_indivclass(classes, test_loader, device, model):
     # print accuracy for each class
     for classname, correct_count in correct_pred.items():
         accuracy = 100 * float(correct_count) / total_pred[classname]
-        print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')    
+        print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
+        logger.info(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')

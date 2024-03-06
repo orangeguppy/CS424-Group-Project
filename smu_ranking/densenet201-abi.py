@@ -27,6 +27,9 @@ class DenseNet201(nn.Module):
     def forward(self, x):
         return self.base_model(x)
 
+    def __str__(self):
+        return "DenseNet201-abi"
+
 if __name__ == "__main__":
     # Hyperparameters
     num_classes = 14  #change acc to num of folders in images
