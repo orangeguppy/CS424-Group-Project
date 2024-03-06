@@ -29,7 +29,7 @@ class DenseNet121(nn.Module):
 
 if __name__ == "__main__":
     # Hyperparameters
-    num_classes = 5  #change acc to num of folders in images
+    num_classes = 14  #change acc to num of folders in images
     num_epochs = 5
 #if too small -- not enough -> no learning
 #if too big - may start overfitting
@@ -44,11 +44,13 @@ if __name__ == "__main__":
     optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, weight_decay=0.001)
     
     # Load data
-    #train_loader, validation_loader, test_loader = j_load_data.create_data(batch_size=batch_size)
-    train_loader, validation_loader, test_loader = j_load_data.create_data()
-    
+    class_list, train_loader, validation_loader, test_loader = j_load_data.create_data(batch_size)
+
     # Train and validate the model
     j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader)
-    
+
     # Test the model
-    j_run_model.test(device, model, test_loader)
+    j_run_model.test(class_list, device, model, test_loader)
+
+    j_run_model.test_indivclass(class_list, test_loader, device, model)
+    

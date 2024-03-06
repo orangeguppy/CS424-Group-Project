@@ -38,7 +38,7 @@ class ResidualBlock(nn.Module):
 
 ############################################################################################################    
 class ResNet(nn.Module):
-    def __init__(self, block, layers, num_classes = 5):
+    def __init__(self, block, layers, num_classes = 14):
         super(ResNet, self).__init__()
         self.inplanes = 64
         self.conv1 = nn.Sequential(
@@ -88,8 +88,8 @@ class ResNet(nn.Module):
 ############################################################################################################
 # Setting hyperparamters
 #num_classes = 10
-num_epochs = 5
-num_classes = 5
+num_epochs = 4
+num_classes = 14
 batch_size = 24
 learning_rate = 0.01
 
@@ -99,21 +99,17 @@ model = ResNet(ResidualBlock, [3, 4, 23, 3]).to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, weight_decay = 0.001, momentum = 0.9)  
 
-# Train the model
-#total_step = len(train_loader)
-
 ############################################################################################################
 # Run model
 
 # Copyable code to use the other two python files (Everything in between change)
 # create the dataset
-train_loader, validation_loader, test_loader = j_load_data.create_data()
+class_list, train_loader, validation_loader, test_loader = j_load_data.create_data(batch_size)
 
 # train the dataset
 j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader)
 
 # test the dataset
-j_run_model.test(device, model, test_loader)
+j_run_model.test(class_list, device, model, test_loader)
 
-classes = ('li ka shing exterior', 'li ka shing interior', 'not smu', 'sol_exterior', 'sol_interior')
-j_run_model.test_indivclass(classes, test_loader, device, model)
+j_run_model.test_indivclass(class_list, test_loader, device, model)
