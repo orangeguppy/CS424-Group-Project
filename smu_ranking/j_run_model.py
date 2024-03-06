@@ -55,7 +55,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
             print('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             print("Epoch time:",(time.time()-start), "s") 
 
-def test(device, model, test_loader):
+def test(classes, device, model, test_loader):
     with torch.no_grad():
         correct = 0
         total = 0
