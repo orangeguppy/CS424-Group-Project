@@ -35,6 +35,22 @@ class SMULogoDataset(torch.utils.data.Dataset):
         # get bounding box coordinates for each mask
         boxes = masks_to_boxes(masks)
 
+        # print("Boxes are")
+        # print(boxes)
+        # print("2222222222222222")
+
+        valid_boxes = []
+        
+        # only add valid boxes
+        for box in boxes:
+            if (box[0] != box[2] and box[1] != box[3]):
+                valid_boxes.append(box)
+
+        boxes = torch.stack(valid_boxes)
+
+        # print("valid boxes")
+        # print(boxes)
+        # print("0000000000")
         # there is only one class
         labels = torch.ones((num_objs,), dtype=torch.int64)
 

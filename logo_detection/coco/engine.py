@@ -15,6 +15,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter("lr", utils.SmoothedValue(window_size=1, fmt="{value:.6f}"))
     header = f"Epoch: [{epoch}]"
+    batch_count = 0
 
     lr_scheduler = None
     if epoch == 0:
@@ -26,6 +27,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
         )
 
     for images, targets in metric_logger.log_every(data_loader, print_freq, header):
+        print("Batch started")
         images = list(image.to(device) for image in images)
         for image in images:
             image_np = image.permute(1, 2, 0).cpu().numpy()
@@ -45,6 +47,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
         losses_reduced = sum(loss for loss in loss_dict_reduced.values())
 
         loss_value = losses_reduced.item()
+        print(f"{epoch}/{batch_count}: {loss_value}")
 
         if not math.isfinite(loss_value):
             print(f"Loss is {loss_value}, stopping training")
@@ -65,6 +68,8 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
 
         metric_logger.update(loss=losses_reduced, **loss_dict_reduced)
         metric_logger.update(lr=optimizer.param_groups[0]["lr"])
+
+        batch_count += 1
 
     return metric_logger
 

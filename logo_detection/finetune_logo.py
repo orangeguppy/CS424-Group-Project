@@ -13,6 +13,7 @@ import utils
 
 def get_model_instance_segmentation(num_classes):
     # load an instance segmentation model pre-trained on COCO
+    print("___")
     model = torchvision.models.detection.maskrcnn_resnet50_fpn(weights="DEFAULT")
 
     # get number of input features for the classifier
@@ -58,7 +59,7 @@ def main():
     # define training and validation data loaders
     data_loader = torch.utils.data.DataLoader(
         dataset,
-        batch_size=1,
+        batch_size=16,
         shuffle=True,
         num_workers=4,
         collate_fn=utils.collate_fn
@@ -100,6 +101,7 @@ def main():
     for epoch in range(num_epochs):
         # train for one epoch, printing every 10 iterations
         train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=10)
+        print("happened")
         torch.save(model.state_dict(), 'train_model_weights.pth')
         # update the learning rate
         lr_scheduler.step()
