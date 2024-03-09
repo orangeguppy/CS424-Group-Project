@@ -62,6 +62,8 @@ def draw_bounding_boxes_with_threshold(image, boxes, labels, scores, threshold, 
     filtered_labels = []
     filtered_scores = []
 
+    print(boxes)
+
     # Filter boxes based on confidence threshold
     for box, label, score in zip(boxes, labels, scores):
         if score >= threshold:
@@ -154,7 +156,7 @@ def test_model(dir, filename):
     pred_boxes = pred["boxes"].long()
 
     # output_image = draw_bounding_boxes(image, pred_boxes, pred_labels, colors="red")
-    output_image = draw_bounding_boxes_with_threshold(image, pred_boxes, pred_labels, pred["scores"], threshold=0.85)
+    output_image = draw_bounding_boxes_with_threshold(image, pred_boxes, pred_labels, pred["scores"], threshold=0)
 
     # Draw the segmentation mask if present
     # masks = (pred["masks"] > 0.7).squeeze(1)
