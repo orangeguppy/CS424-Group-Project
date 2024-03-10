@@ -50,7 +50,6 @@ srun whichgpu
 
 # If you require any packages, install it as usual before the srun job submission.
 pip3 install torch torchvision
-pip3 install -r requirements.txt
 module load Python/3.7.13
 module load CUDA/11.7.0
 
