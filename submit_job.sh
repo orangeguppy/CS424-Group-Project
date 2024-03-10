@@ -23,10 +23,10 @@
 ## EDIT AFTER THIS LINE IF YOU ARE OKAY WITH DEFAULT SETTINGS ##
 ################################################################
 
-# SBATCH --partition=project                 # The partition you've been assigned
-# SBATCH --account=UseMyInfoCommandToCheck   # The account you've been assigned (normally student)
-# SBATCH --qos=UseMyInfoCommandToCheck       # What is the QOS assigned to you? Check with myinfo command
-# SBATCH --mail-user=email1@scis.smu.edu.sg,email2@scis.smu.edu.sg # Who should receive the email notifications
+# SBATCH --partition=student                 # The partition you've been assigned
+# SBATCH --account=student   # The account you've been assigned (normally student)
+# SBATCH --qos=studentqos       # What is the QOS assigned to you? Check with myinfo command
+# SBATCH --mail-user=nicoleoo.2021@scis.smu.edu.sg # Who should receive the email notifications
 # SBATCH --job-name=finalSubmissionFinal     # Give the job a name
 
 #################################################
