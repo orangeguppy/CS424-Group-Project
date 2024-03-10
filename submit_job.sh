@@ -36,7 +36,7 @@ SBATCH --job-name=finalSubmissionFinal     # Give the job a name
 # Purge the environment, load the modules we require.
 # Refer to https://violet.smu.edu.sg/origami/module/ for more information
 module purge
-module load Python/3.7.12
+module load Python/3.7.13
 
 # Create a virtual environment
 python3 -m venv ~/myenv
@@ -55,4 +55,4 @@ module load Python/3.7.13
 module load CUDA/11.7.0
 
 # Submit your job to the cluster
-srun --gres=gpu:1 python /path/to/your/python/script.py
+srun --gres=gpu:1 python logo_detection/finetune_logo.py
