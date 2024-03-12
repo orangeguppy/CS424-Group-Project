@@ -10,7 +10,7 @@ from torch.utils.data import ConcatDataset
 import os
 
 def create_data():
-    dataset_dir = "dataset/smu_images"
+    dataset_dir = "dataset/classification_images"
     items = os.listdir(dataset_dir)
     
     # Iterate through each item
