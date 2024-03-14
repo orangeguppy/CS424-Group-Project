@@ -1,14 +1,24 @@
 import torch
 from torchvision.datasets import ImageFolder
 import torch.nn.functional as F
+import os
+import cv2
 
 def create_test_res(img_dir, device, model, classes):
+    # Path to the folder containing images
+    folder_path = img_dir
 
+    # List to store images
+    images = []
 
-    
-    test_dataset = ImageFolder(root=img_dir)
-    test_loader =  torch.utils.data.DataLoader(test_dataset, batch_size=16, shuffle=True)
-    test_image_names = [item[0].split('/')[-1] for item in test_dataset.imgs]
+    # Loop through all files in the folder
+    for filename in os.listdir(folder_path):
+        # Read the image
+        image_path = os.path.join(folder_path, filename)
+        img = cv2.imread(image_path)
+        if img is not None:
+            # Append the image to the list
+            images.append(img)
 
     non_smu_index = classes.index("non smu")
     print('non smu index: {non_smu_index}')
