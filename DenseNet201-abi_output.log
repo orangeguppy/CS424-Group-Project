@@ -1,0 +1,2 @@
+2024-03-14 14:47:03,199 - train_test_logger - INFO - Epoch [1/5], Loss: 2.0926
+2024-03-14 14:49:14,715 - train_test_logger - INFO - Accuracy of the network on the 44 validation images: 76.47907647907648 %

@@ -55,5 +55,5 @@ def create_data():
     validation_loader = torch.utils.data.DataLoader(validation_dataset, batch_size=16, shuffle=True)
     test_loader =  torch.utils.data.DataLoader(test_dataset, batch_size=16, shuffle=True)
 
-    return train_loader, validation_loader, test_loader
+    return train_loader, validation_loader, test_loader, default_dataset.classes
 
