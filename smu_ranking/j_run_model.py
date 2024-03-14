@@ -156,7 +156,12 @@ def test_indivclass(classes, test_loader, device, model):
         print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
         logger.info(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
 
-def create_test_res(img_dir, device, model):
+def find_a_class(a, word):
+    for l in range(len(a)):
+        if a[l] == word:
+            return l
+
+def create_test_res(img_dir, device, model, number):
     test_dataset = ImageFolder(root=img_dir)
     test_loader =  torch.utils.data.DataLoader(test_dataset, batch_size=16, shuffle=True)
     test_image_names = [item[0].split('/')[-1] for item in test_dataset.imgs]
@@ -179,7 +184,7 @@ def create_test_res(img_dir, device, model):
             res = zip(_, predict)
             for num, label in outputs.data:
                 n = 0
-                if label == 0: #change to index of not smu
+                if label == number: #change to index of not smu
                     n = 1 - num
                 else:
                     n = num
