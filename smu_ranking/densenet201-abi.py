@@ -48,12 +48,12 @@ if __name__ == "__main__":
     
     # Load data
     #train_loader, validation_loader, test_loader = j_load_data.create_data(batch_size=batch_size)
-    train_loader, validation_loader, test_loader = j_load_data.create_data()
+    train_loader, validation_loader, test_loader, classes = j_load_data.create_data()
     
     # Train and validate the model
-    j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader)
-    PATH = './densenet.pth'
-    torch.save(model.state_dict(), PATH)
+    #j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader)
+    #PATH = './densenet.pth'
+    #torch.save(model.state_dict(), PATH)
     
     # Test the model
-    j_run_model.test(device, model, test_loader)
+    #j_run_model.test(device, model, test_loader)
