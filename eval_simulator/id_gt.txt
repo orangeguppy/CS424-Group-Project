@@ -1,0 +1,14 @@
+DSCF1293.JPG, 1
+DSCF1319.JPG, 1
+DSCF1677.JPG, 1
+DSCF1708.JPG, 1
+DSCF1722.JPG, 1
+DSCF1761.JPG, 1
+DSCF1897.JPG, 1
+DSCF1912.JPG, 1
+DSCF1919.JPG, 1
+sample1.jpg, 1
+sample2.jpg, 1
+sample3.jpg, 1
+wrong1.jpg, 0
+wrong2.jpg, 0
