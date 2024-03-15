@@ -1,2 +1,14 @@
 2024-03-14 14:47:03,199 - train_test_logger - INFO - Epoch [1/5], Loss: 2.0926
 2024-03-14 14:49:14,715 - train_test_logger - INFO - Accuracy of the network on the 44 validation images: 76.47907647907648 %
+2024-03-16 01:35:07,531 - train_test_logger - INFO - Epoch [1/5], Loss: 2.1565
+2024-03-16 01:37:35,425 - train_test_logger - INFO - Accuracy of the network on the 44 validation images: 81.96248196248196 %
+2024-03-16 02:17:34,427 - train_test_logger - INFO - Epoch [2/5], Loss: 0.5146
+2024-03-16 02:21:00,661 - train_test_logger - INFO - Accuracy of the network on the 44 validation images: 83.40548340548341 %
+2024-03-16 02:48:43,225 - train_test_logger - INFO - Epoch [3/5], Loss: 2.5027
+2024-03-16 02:51:11,560 - train_test_logger - INFO - Accuracy of the network on the 44 validation images: 93.93939393939394 %
+2024-03-16 03:19:43,627 - train_test_logger - INFO - Epoch [4/5], Loss: 0.4049
+2024-03-16 03:22:12,635 - train_test_logger - INFO - Accuracy of the network on the 44 validation images: 95.81529581529581 %
+2024-03-16 03:49:55,918 - train_test_logger - INFO - Epoch [5/5], Loss: 0.1143
+2024-03-16 03:52:21,826 - train_test_logger - INFO - Accuracy of the network on the 44 validation images: 97.54689754689754 %
+2024-03-16 03:54:54,504 - train_test_logger - INFO - Accuracy of the network on the 44 test images: 96.1038961038961 %
+2024-03-16 03:54:54,504 - train_test_logger - INFO - Accuracy of the network on the 44 test images: 96.1038961038961 %
