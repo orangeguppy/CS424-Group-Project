@@ -12,9 +12,10 @@ import gc
 import time
 
 def train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader):
+    best_accuracy = 0
     # If the model is DenseNet201, initialise a logger
     # Create a logger
-    if (str(model) == "DenseNet201-abi"):
+    if (str(model) == "DenseNet201-abi") or (str(model) == "DenseNet121-abi"):
         logger = logging.getLogger('train_test_logger')
 
         # Create a file handler
@@ -74,11 +75,15 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
                 del images, labels, outputs
-
+            accuracy = 100 * correct / total
+            if (accuracy > best_accuracy):
+                torch.save(model.state_dict(), 'best_model_parameters.pth')
             print('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             print("Epoch time:",(time.time()-start), "s") 
             logger.info('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             logger.info("Epoch time:",(time.time()-start), "s")
+            
+        
 
 def test(classes, device, model, test_loader):
     if (str(model) == "DenseNet201-abi"):
