@@ -44,7 +44,7 @@ if __name__ == "__main__":
     optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, weight_decay=0.001)
     
     # Load data
-    train_loader, validation_loader, test_loader, class_list  = j_load_data.create_data(batch_size)
+    train_loader, validation_loader, test_loader, class_list  = j_load_data.create_data()
 
     # Train and validate the model
     j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader)
