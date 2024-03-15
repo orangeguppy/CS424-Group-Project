@@ -11,13 +11,6 @@ import os
 
 def create_data():
     dataset_dir = "dataset/classification_images"
-    items = os.listdir(dataset_dir)
-    
-    # Iterate through each item
-    for item in items:
-        # Check if the item is a folder
-        if os.path.isdir(os.path.join(dataset_dir, item)):
-            print(item)
 
     # Default transforms without augmentation
     default_transform = transforms.Compose([
@@ -49,15 +42,14 @@ def create_data():
     test_size = len(full_dataset) - train_size - validation_size  
     train_dataset, validation_dataset, test_dataset = random_split(full_dataset, [train_size, validation_size, test_size])
 
-
     #create data loaders
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=16, shuffle=True)
     validation_loader = torch.utils.data.DataLoader(validation_dataset, batch_size=16, shuffle=True)
     test_loader =  torch.utils.data.DataLoader(test_dataset, batch_size=16, shuffle=True)
 
-    print("here is test", default_dataset.class_to_idx)
-    print('here is test 2', default_dataset.classes)
-    print("testung", default_dataset.classes[0])
+    # Iterate through each item
+    for item in default_dataset.classes:
+            print(item)
 
     return train_loader, validation_loader, test_loader, default_dataset.classes
 
