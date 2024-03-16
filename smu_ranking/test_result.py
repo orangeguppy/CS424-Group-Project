@@ -41,7 +41,8 @@ if __name__ == '__main__':
     data_loader = DataLoader(image_dataset, batch_size=16, shuffle=False, num_workers=4)
     #load model
     model = densenet201.DenseNet201(num_classes=35).to(device)
-    PATH = './densenet.pth'
+    # PATH = './densenet.pth'
+    PATH = './best_model_parameters.pth'
     model.load_state_dict(torch.load(PATH))
 
     #get non smu index
