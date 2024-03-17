@@ -1,6 +1,7 @@
 import torch
 import os
 import densenet201
+import densenet121
 import os
 from PIL import Image
 import torch
@@ -35,21 +36,21 @@ if __name__ == '__main__':
     ])
 
     # Create custom DataLoader
-    image_dir = "eval_simulator/image_folder"
+    image_dir = "dataset/classification_images/basement glass are"
     image_names = os.listdir(image_dir)
     image_dataset = ImageDataset(image_dir, transform=preprocess)
     data_loader = DataLoader(image_dataset, batch_size=16, shuffle=False, num_workers=4)
     #load model
-    model = densenet201.DenseNet201(num_classes=35).to(device)
-    # PATH = './densenet.pth'
-    PATH = './best_model_parameters.pth'
+    model = densenet121.DenseNet121(num_classes=35).to(device)
+    PATH = './densenet121_run2.pth'
+    #PATH = './best_model_parameters.pth'
     model.load_state_dict(torch.load(PATH))
 
     #get non smu index
     non_smu_index = 17
 
     #create text file
-    f = open("id_est.txt2", "w")
+    f = open("id_est.txt_121_run2_basement glass", "w")
     # Iterate through the DataLoader and make predictions
     model.eval()
     i = 0

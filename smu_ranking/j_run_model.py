@@ -17,21 +17,21 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
     best_accuracy = 0
     # If the model is DenseNet201, initialise a logger
     # Create a logger
-    if (str(model) == "DenseNet201-abi") or (str(model) == "DenseNet121-abi"):
-        logger = logging.getLogger('train_test_logger')
+    # if (str(model) == "DenseNet201-abi") or (str(model) == "DenseNet121-abi"):
+    # logger = logging.getLogger('train_test_logger')
 
-        # Create a file handler
-        file_handler = logging.FileHandler(f'{model}_output.log')
+    # # Create a file handler
+    # file_handler = logging.FileHandler(f'{model}_output.log')
 
-        # Define the log message format
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        file_handler.setFormatter(formatter)  # Set the formatter for the file handler
+    # # Define the log message format
+    # formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # file_handler.setFormatter(formatter)  # Set the formatter for the file handler
 
-        # Add the file handler to the logger
-        logger.addHandler(file_handler)
+    # # Add the file handler to the logger
+    # logger.addHandler(file_handler)
 
-        # Set logging level
-        logger.setLevel(logging.INFO)
+    # # Set logging level
+    # logger.setLevel(logging.INFO)
 
     #total_step = len(j_load_data.train_loader)
     for epoch in range(num_epochs):
@@ -40,14 +40,14 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
             # Move tensors to the configured device
             images = images.to(device)
             labels = labels.to(device)
-            # print(labels)
+            #print(labels)
 
             # print("i am here 1")
             
             # Forward pass
             outputs = model(images)
 
-            # print(outputs)
+            #print(outputs)
             loss = criterion(outputs, labels)
 
             # Backward and optimize
@@ -62,8 +62,8 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
 
         print ('Epoch [{}/{}], Loss: {:.4f}' 
                         .format(epoch+1, num_epochs, loss.item()))
-        logger.info('Epoch [{}/{}], Loss: {:.4f}' 
-                        .format(epoch+1, num_epochs, loss.item()))
+        # logger.info('Epoch [{}/{}], Loss: {:.4f}' 
+                        # .format(epoch+1, num_epochs, loss.item()))
         
         # Validation
         with torch.no_grad():
@@ -79,30 +79,30 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
                 del images, labels, outputs
             accuracy = 100 * correct / total
             if (accuracy > best_accuracy):
-                torch.save(model.state_dict(), 'best_model_parameters_desnet201_v2.pth')
+                torch.save(model.state_dict(), 'best_model_parameters_densenet121_run3.pth')
             print('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             print("Epoch time:",(time.time()-start), "s") 
-            logger.info('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
+            # logger.info('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             # logger.info("Epoch time:",(time.time()-start), "s")
             
         
 
 def test(device, model, test_loader):
-    if (str(model) == "DenseNet201-abi"):
-        logger = logging.getLogger('train_test_logger')
+    # if (str(model) == "DenseNet201-abi"):
+    #     logger = logging.getLogger('train_test_logger')
 
-        # Create a file handler
-        file_handler = logging.FileHandler(f'{model}_output.log')
+    #     # Create a file handler
+    #     file_handler = logging.FileHandler(f'{model}_output.log')
 
-        # Define the log message format
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        file_handler.setFormatter(formatter)  # Set the formatter for the file handler
+    #     # Define the log message format
+    #     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    #     file_handler.setFormatter(formatter)  # Set the formatter for the file handler
 
-        # Add the file handler to the logger
-        logger.addHandler(file_handler)
+        # # Add the file handler to the logger
+        # logger.addHandler(file_handler)
 
-        # Set logging level
-        logger.setLevel(logging.INFO)
+        # # Set logging level
+        # logger.setLevel(logging.INFO)
 
     with torch.no_grad():
         correct = 0
@@ -117,7 +117,7 @@ def test(device, model, test_loader):
             del images, labels, outputs
 
         print('Accuracy of the network on the {} test images: {} %'.format(len(test_loader), 100 * correct / total))   
-        logger.info('Accuracy of the network on the {} test images: {} %'.format(len(test_loader), 100 * correct / total))
+        #logger.info('Accuracy of the network on the {} test images: {} %'.format(len(test_loader), 100 * correct / total))
 
 def test_indivclass(classes, test_loader, device, model):
     correct_pred = {classname: 0 for classname in classes}
