@@ -40,14 +40,14 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
             # Move tensors to the configured device
             images = images.to(device)
             labels = labels.to(device)
-            print(labels)
+            # print(labels)
 
             # print("i am here 1")
             
             # Forward pass
             outputs = model(images)
 
-            print(outputs)
+            # print(outputs)
             loss = criterion(outputs, labels)
 
             # Backward and optimize
@@ -79,11 +79,11 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
                 del images, labels, outputs
             accuracy = 100 * correct / total
             if (accuracy > best_accuracy):
-                torch.save(model.state_dict(), 'best_model_parameters.pth')
+                torch.save(model.state_dict(), 'best_model_parameters_desnet201_v2.pth')
             print('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             print("Epoch time:",(time.time()-start), "s") 
             logger.info('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
-            logger.info("Epoch time:",(time.time()-start), "s")
+            # logger.info("Epoch time:",(time.time()-start), "s")
             
         
 
@@ -188,7 +188,7 @@ def create_test_res(img_dir, device, model, classes):
             images = images.to(device)
             labels = labels.to(device)
             outputs = model(images)
-            print(outputs.data)
+            # print(outputs.data)
             #gives highest prob, predicted class
             _, predict = torch.max(outputs.data, 1)
             #list of probabilities for each 
