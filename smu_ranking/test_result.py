@@ -47,7 +47,7 @@ if __name__ == '__main__':
     model.load_state_dict(torch.load(PATH))
 
     #get non smu index
-    non_smu_index = 17
+    non_smu_index = 21
 
     #create text file
     f = open("id_est.txt_121_run2_basement glass", "w")
