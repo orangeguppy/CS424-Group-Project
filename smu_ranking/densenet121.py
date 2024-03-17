@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     # Train and validate the model
     j_run_model.train(num_epochs, device, model, criterion, optimizer, train_loader, validation_loader)
-    PATH = './densenet121.pth'
+    PATH = './densenet121_run3.pth'
     torch.save(model.state_dict(), PATH)
 
     # Test the model

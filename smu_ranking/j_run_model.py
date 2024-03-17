@@ -79,7 +79,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
                 del images, labels, outputs
             accuracy = 100 * correct / total
             if (accuracy > best_accuracy):
-                torch.save(model.state_dict(), 'best_model_parameters_densenet121_run2.pth')
+                torch.save(model.state_dict(), 'best_model_parameters_densenet121_run3.pth')
             print('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             print("Epoch time:",(time.time()-start), "s") 
             # logger.info('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
@@ -163,42 +163,4 @@ def test_indivclass(classes, test_loader, device, model):
         print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
         logger.info(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
 
-def find_a_class(a, word):
-    for l in range(len(a)):
-        if a[l] == word:
-            return l
-
-def create_test_res(img_dir, device, model, classes):
-    test_dataset = ImageFolder(root=img_dir)
-    test_loader =  torch.utils.data.DataLoader(test_dataset, batch_size=16, shuffle=True)
-    test_image_names = [item[0].split('/')[-1] for item in test_dataset.imgs]
-
-    non_smu_index = classes.index("non smu")
-    print('non smu index: {non_smu_index}')
-
-    #create text file
-    f = open("id_est.txt", "w")
-
-    #do the predictions
-    with torch.no_grad():
-        correct = 0
-        total = 0
-        i = 0
-        for images, labels in test_loader:
-            images = images.to(device)
-            labels = labels.to(device)
-            outputs = model(images)
-            print(outputs.data)
-            #gives highest prob, predicted class
-            _, predict = torch.max(outputs.data, 1)
-            #list of probabilities for each 
-            probabilities = F.softmax(outputs.data, 1)
-            for p in probabilities:
-                likelihood_smu = 1- p[non_smu_index]
-                #return this and add to text file
-            res = zip(_, predict)
-            del images, labels, outputs
-    
-    print('Accuracy of the network on the {} test images: {} %'.format(len(test_loader), 100 * correct / total))
-    f.close()
     
