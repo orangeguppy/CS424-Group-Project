@@ -1,7 +1,8 @@
 import torch
 import os
+#step1: comment out model not being tested
 import densenet201
-import densenet121
+#import densenet121
 import os
 from PIL import Image
 import torch
@@ -36,21 +37,25 @@ if __name__ == '__main__':
     ])
 
     # Create custom DataLoader
-    image_dir = "eval_simulator/image_folder"
+    #step2: check correct dir of images being tested
+    image_dir = "eval_simulator/image_folder2"
     image_names = os.listdir(image_dir)
     image_dataset = ImageDataset(image_dir, transform=preprocess)
     data_loader = DataLoader(image_dataset, batch_size=16, shuffle=False, num_workers=4)
     #load model
-    model = densenet121.DenseNet121(num_classes=35).to(device)
-    PATH = './best_model_parameters_densenet121_run3.pth'
-    #PATH = './best_model_parameters.pth'
+    #step3: mode name should be correct no x2
+    model = densenet201.DenseNet201(num_classes=42).to(device)
+    #step4: correct name of weight
+    #PATH = './densenet201_run3.pth'
+    PATH = './best_model_parameters_densenet201_run3.pth'
     model.load_state_dict(torch.load(PATH))
 
     #get non smu index
     non_smu_index = 21
 
     #create text file
-    f = open("id_est.txt_121_run3_best", "w")
+    #step4: rename text file correctly
+    f = open("id_est.txt_201_run3_best2", "w")
     # Iterate through the DataLoader and make predictions
     model.eval()
     i = 0
@@ -66,6 +71,8 @@ if __name__ == '__main__':
             likelihood_smu = 1- p[non_smu_index]
             f.write(f"{image_names[i]} {likelihood_smu}\n")
             i += 1
+    print("done")
+
 
 
 
