@@ -69,7 +69,7 @@ if __name__ == '__main__':
         predicted_classes = torch.argmax(probabilities, dim=1)
         for p in probabilities:
             likelihood_smu = 1- p[non_smu_index]
-            f.write(f"{image_names[i]} {likelihood_smu}\n")
+            f.write(f"{image_names[i]}, {likelihood_smu}\n")
             i += 1
     print("done")
 
