@@ -79,7 +79,7 @@ def train(num_epochs, device, model, criterion, optimizer, train_loader, validat
                 del images, labels, outputs
             accuracy = 100 * correct / total
             if (accuracy > best_accuracy):
-                torch.save(model.state_dict(), 'best_model_parameters_densenet121_run3.pth')
+                torch.save(model.state_dict(), 'best_model_parameters_densenet121_run4.pth')
             print('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
             print("Epoch time:",(time.time()-start), "s") 
             # logger.info('Accuracy of the network on the {} validation images: {} %'.format(len(validation_loader), 100 * correct / total))
