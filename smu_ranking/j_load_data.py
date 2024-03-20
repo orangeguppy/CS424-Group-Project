@@ -37,7 +37,7 @@ def create_data():
     full_dataset = ConcatDataset([default_dataset, augmented_dataset, augmented_dataset_2])
         
     #split into 3 datasets
-    train_size = int(0.7 * len(full_dataset))  
+    train_size = int(0.75 * len(full_dataset))  
     validation_size = int(0.15 * len(full_dataset))  
     test_size = len(full_dataset) - train_size - validation_size  
     train_dataset, validation_dataset, test_dataset = random_split(full_dataset, [train_size, validation_size, test_size])
