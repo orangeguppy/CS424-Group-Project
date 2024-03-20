@@ -42,8 +42,9 @@ def merge_accuracies(logos_file, id_est_file, output_file):
     for line in id_est_data:
         filename, accuracy = line.strip().split(', ')
         accuracy = float(accuracy)
-        if filename in accuracy_dict:
+        if filename in accuracy_dict and accuracy_dict[filename] > 0.8:
             accuracy_dict[filename] = max(accuracy_dict[filename], accuracy)
+            print(accuracy_dict[filename], accuracy)
         else:
             accuracy_dict[filename] = accuracy
 

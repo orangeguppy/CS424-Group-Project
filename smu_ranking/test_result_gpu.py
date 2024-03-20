@@ -9,6 +9,37 @@ import torch
 from torchvision import transforms
 from torch.utils.data import Dataset, DataLoader
 
+def merge_accuracies(logos_file, id_est_file, output_file):
+    # Read data from the logo detection
+    with open(logos_file, 'r') as logos:
+        logos_data = logos.readlines()
+
+    # Read data from desnet
+    with open(id_est_file, 'r') as id_est:
+        id_est_data = id_est.readlines()
+
+    # Create a dictionary to store accuracies for each image
+    accuracy_dict = {}
+
+    # Populate accuracy dictionary from logos.txt
+    for line in logos_data:
+        filename, accuracy = line.strip().split(', ')
+        accuracy_dict[filename] = float(accuracy)
+
+    # Update accuracy dictionary with data from desnet, keeping the higher accuracy
+    for line in id_est_data:
+        filename, accuracy = line.strip().split(', ')
+        accuracy = float(accuracy)
+        if filename in accuracy_dict and accuracy_dict[filename] > 0.8:
+            accuracy_dict[filename] = max(accuracy_dict[filename], accuracy)
+        else:
+            accuracy_dict[filename] = accuracy
+
+    # Write the merged accuracies to the output file
+    with open(output_file, 'w') as output:
+        for filename, accuracy in accuracy_dict.items():
+            output.write(f"{filename}, {accuracy}\n")
+            
 class ImageDataset(Dataset):
     def __init__(self, image_dir, transform):
         self.image_dir = image_dir
@@ -54,7 +85,9 @@ if __name__ == '__main__':
 
     #create text file
     #step5: rename text file correctly
-    ranking_result = open("id_est.txt_201_run3_best2", "w")
+    ranking_result_file = "id_est.txt_201_run3_best2"
+    # ranking_result_file = "dummy_results_model.txt"
+    ranking_result = open(ranking_result_file, "w")
     # Iterate through the DataLoader and make predictions
     model.eval()
     i = 0
@@ -73,39 +106,35 @@ if __name__ == '__main__':
     ranking_result.close()
     print("initial ranking completed")
 
-    # File Dependancy paths
-    logos_file = open("logos.txt", "r")
-    ranking_file = open(ranking_result, "r")
-    output_file = open("id_est.txt", "w")
-
+    # # File Dependancy paths
+    # logos_file = open("logos.txt", "r")
+    # ranking_file = open(ranking_result_file, "r")
+    # output_file = open("id_est.txt", "w")
     # Iterate over both files simultaneously
-    for logos_line, id_est_line in zip(logos_file, ranking_file):
-            # Strip lines to remove any leading/trailing whitespace
-            logos_line = logos_line.strip()
-            id_est_line = id_est_line.strip()
+    # for logos_line, id_est_line in zip(logos_file, ranking_file):
+    #         # Strip lines to remove any leading/trailing whitespace
+    #         logos_line = logos_line.strip()
+    #         id_est_line = id_est_line.strip()
             
-            # Extracts chance of logo detection
-            logos_value = float(logos_line.split()[-1])
-            # logos_file line overries id_est_line if logos_value exceeds threshold
-            if logos_value > 0.8:
-                id_est_value = float(id_est_line.split()[-1])
-                if logos_value > id_est_value:
-                    output_file.write(logos_line + "\n")
-            else:
-                output_file.write(id_est_line + "\n")
+    #         # Extracts chance of logo detection
+    #         logos_value = float(logos_line.split()[-1])
+    #         # logos_file line overries id_est_line if logos_value exceeds threshold
+    #         if logos_value > 0.8:
+    #             id_est_value = float(id_est_line.split()[-1])
+    #             if logos_value > id_est_value:
+    #                 output_file.write(logos_line + "\n")
+    #         else:
+    #             output_file.write(id_est_line + "\n")
 
-    logos_file.close()
-    ranking_file.close()
-    output_file.close()
+    # logos_file.close()
+    # ranking_file.close()
+    # output_file.close()
+    
+    # File paths
+    logos_file = 'logos.txt'
+    id_est_file = 'dummy_results_model.txt'
+    output_file = 'output_editfile.txt'
+
+
 
     print("final ranking completed")
-
-
-
-
-
-
-
-
-
-
