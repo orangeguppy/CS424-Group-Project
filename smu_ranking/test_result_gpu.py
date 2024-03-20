@@ -1,8 +1,8 @@
 import torch
 import os
 #step1: comment out model not being tested
-import densenet201
-#import densenet121
+#import densenet201
+import densenet121
 import os
 from PIL import Image
 import torch
@@ -38,24 +38,23 @@ if __name__ == '__main__':
 
     # Create custom DataLoader
     #step2: check correct dir of images being tested
-    image_dir = "eval_simulator/image_folder2"
+    image_dir = "eval_simulator/image_folder"
     image_names = os.listdir(image_dir)
     image_dataset = ImageDataset(image_dir, transform=preprocess)
     data_loader = DataLoader(image_dataset, batch_size=16, shuffle=False, num_workers=4)
     #load model
     #step3: mode name should be correct no x2
-    model = densenet201.DenseNet201(num_classes=42).to(device)
+    model = densenet121.DenseNet121(num_classes=42).to(device)
     #step4: correct name of weight
-    #PATH = './densenet201_run3.pth'
-    PATH = './best_model_parameters_densenet201_run3.pth'
+    PATH = './best_model_parameters_densenet121_run3.pth'
     model.load_state_dict(torch.load(PATH))
 
     #get non smu index
     non_smu_index = 21
 
     #create text file
-    #step4: rename text file correctly
-    f = open("id_est.txt_201_run3_best2", "w")
+    #step5: rename text file correctly
+    ranking_result = open("id_est.txt_201_run3_best2", "w")
     # Iterate through the DataLoader and make predictions
     model.eval()
     i = 0
@@ -69,9 +68,38 @@ if __name__ == '__main__':
         predicted_classes = torch.argmax(probabilities, dim=1)
         for p in probabilities:
             likelihood_smu = 1- p[non_smu_index]
-            f.write(f"{image_names[i]}, {likelihood_smu}\n")
+            ranking_result.write(f"{image_names[i]}, {likelihood_smu}\n")
             i += 1
-    print("done")
+    ranking_result.close()
+    print("initial ranking completed")
+
+    # File Dependancy paths
+    logos_file = open("logos.txt", "r")
+    ranking_file = open(ranking_result, "r")
+    output_file = open("id_est.txt", "w")
+
+    # Iterate over both files simultaneously
+    for logos_line, id_est_line in zip(logos_file, ranking_file):
+            # Strip lines to remove any leading/trailing whitespace
+            logos_line = logos_line.strip()
+            id_est_line = id_est_line.strip()
+            
+            # Extracts chance of logo detection
+            logos_value = float(logos_line.split()[-1])
+            # logos_file line overries id_est_line if logos_value exceeds threshold
+            if logos_value > 0.8:
+                id_est_value = float(id_est_line.split()[-1])
+                if logos_value > id_est_value:
+                    output_file.write(logos_line + "\n")
+            else:
+                output_file.write(id_est_line + "\n")
+
+    logos_file.close()
+    ranking_file.close()
+    output_file.close()
+
+    print("final ranking completed")
+
 
 
 
