@@ -69,25 +69,27 @@ if __name__ == '__main__':
 
     # Create custom DataLoader
     #step2: check correct dir of images being tested
-    image_dir = "eval_simulator/image_folder"
+    image_dir = "eval_simulator/final_testing_images"
     image_names = os.listdir(image_dir)
     image_dataset = ImageDataset(image_dir, transform=preprocess)
     data_loader = DataLoader(image_dataset, batch_size=16, shuffle=False, num_workers=4)
+
     #load model
     #step3: mode name should be correct no x2
     model = densenet121.DenseNet121(num_classes=42).to(device)
+    
     #step4: correct name of weight
     PATH = './best_model_parameters_densenet121_run3.pth'
     model.load_state_dict(torch.load(PATH))
 
     #get non smu index
-    non_smu_index = 21
+    non_smu_index = 20
 
     #create text file
     #step5: rename text file correctly
     ranking_result_file = "id_est.txt_201_run3_best2"
-    # ranking_result_file = "dummy_results_model.txt"
     ranking_result = open(ranking_result_file, "w")
+
     # Iterate through the DataLoader and make predictions
     model.eval()
     i = 0
@@ -132,8 +134,8 @@ if __name__ == '__main__':
     
     # File paths
     logos_file = 'logos.txt'
-    id_est_file = 'ranking_result_file.txt'
+    #id_est_file = 'ranking_result_file.txt'
     output_file = 'final_output.txt'
-    merge_accuracies(logos_file, id_est_file, output_file)
+    merge_accuracies(logos_file, ranking_result_file, output_file)
     
     print("final ranking completed")
