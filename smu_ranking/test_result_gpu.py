@@ -132,9 +132,8 @@ if __name__ == '__main__':
     
     # File paths
     logos_file = 'logos.txt'
-    id_est_file = 'dummy_results_model.txt'
-    output_file = 'output_editfile.txt'
-
-
-
+    id_est_file = 'ranking_result_file.txt'
+    output_file = 'final_output.txt'
+    merge_accuracies(logos_file, id_est_file, output_file)
+    
     print("final ranking completed")
